@@ -9,11 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class UserController {
 
+	// http://localhost/user/sign-up-view
 	@GetMapping("/sign-up-view")
 	public String signUpView(Model model) {
-		
 		model.addAttribute("viewName", "user/signUp");
-		
 		return "template/layout";
 	}
 	
