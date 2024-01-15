@@ -102,28 +102,22 @@
 					return false;
 				}
 				
-				// 중복 확인 후 사용 가능한 아이디인지 확인
-				// => idCheckOk 클래스에 d-none이 없을 때
-				if($("idCheckOk").hasClass("d-none")) {
+				if($("#idCheckOk").hasClass("d-none")) {
 					alert("아이디 중복확인을 다시 해주세요.");
 					return false;
 				}
 				
-				// 1) 서버 전송: submit을 js에서 동작시킴
-				// $(this)[0].submit(); // 화면 이동이 된다.
-				
-				// 2) AJAX: 화면 이동되지 않음(콜백함수에서 이동). 응답값 JSON
-				let url = $(this).attr("action");
-				let params = $(this).serialize(); // form 태그에 있는 name 속성과 값으로 파라미터를 구성 
 
-				$.post(url, params) // request
-				.done(function(data) { // response
-					// {"code":200, "result":"성공"}
+				// AJAX
+				let url = $(this).attr("action");
+				let params = $(this).serialize();
+
+				$.post(url, params)
+				.done(function(data) {
 					if(data.code == 200) {
 						alert("가입을 환영합니다. 로그인 해주세요.");
-						location.href = "/user/sign-in-view"; // 로그인 화면으로 이동
+						location.href = "/user/sign-in-view";
 					} else {
-						// 로직 실패
 						alert(data.error_message);
 					}
 				});
