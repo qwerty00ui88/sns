@@ -91,7 +91,7 @@ public class UserRestController {
 		// 비밀번호 해싱
 		String hashedPassword = EncryptUtils.md5(password);
 		// select
-		UserEntity user =userBO.getUserByLoginIdPassword(loginId, hashedPassword);
+		UserEntity user =userBO.getUserEntityByLoginIdPassword(loginId, hashedPassword);
 		// 응답
 		Map<String, Object> result = new HashMap<>();
 		if(user != null) {
