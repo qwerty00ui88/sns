@@ -5,6 +5,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jakarta.servlet.http.HttpSession;
+
 @RequestMapping("/user")
 @Controller
 public class UserController {
@@ -33,4 +35,15 @@ public class UserController {
 		return "template/layout";
 	}
 	
+	// http://localhost/user/sign-out
+	@RequestMapping("/sign-out")
+	public String signOut(HttpSession session) {
+		// 세션 삭제
+		session.removeAttribute("userId");
+		session.removeAttribute("userLoginId");
+		session.removeAttribute("userName");
+		
+		// 리다이렉트
+		return "redirect:/user/sign-in-view";
+	}
 }
