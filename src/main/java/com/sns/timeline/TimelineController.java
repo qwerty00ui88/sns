@@ -27,11 +27,11 @@ public class TimelineController {
 		Integer userId = (Integer)session.getAttribute("userId");
 		
 		// select
-		List<PostEntity> postEntityList= postBO.getPostEntityList();
+		List<PostEntity> postList= postBO.getPostEntityList();
 		
 		// model
 		model.addAttribute("userId", userId);
-		model.addAttribute("postEntityList", postEntityList);
+		model.addAttribute("postList", postList);
 		model.addAttribute("viewName", "timeline/timeline");
 		
 		return "template/layout";
