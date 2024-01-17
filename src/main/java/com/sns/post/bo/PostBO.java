@@ -15,7 +15,7 @@ public class PostBO {
 	private PostRepository postRepository;
 	
 	public List<PostEntity> getPostEntityList() {
-		return postRepository.findAll();
+		return postRepository.findAllByOrderByIdDesc();
 	}
 
 }
