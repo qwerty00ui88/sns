@@ -23,14 +23,10 @@ public class TimelineController {
 	// http://localhost/timeline/timeline-view
 	@GetMapping("/timeline-view")
 	public String timelineView(Model model, HttpSession session) {
-		// 로그인 -> 글쓰기 가능, 비로그인 -> 글쓰기 불가
-		Integer userId = (Integer)session.getAttribute("userId");
-		
 		// select
 		List<PostEntity> postList= postBO.getPostEntityList();
 		
 		// model
-		model.addAttribute("userId", userId);
 		model.addAttribute("postList", postList);
 		model.addAttribute("viewName", "timeline/timeline");
 		
