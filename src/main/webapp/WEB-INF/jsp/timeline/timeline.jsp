@@ -79,7 +79,7 @@
 						<%-- 댓글 쓰기 --%>
 						<div class="comment-write d-flex border-top mt-2">
 							<input type="text" class="form-control border-0 mr-2 comment-input" placeholder="댓글 달기"/> 
-							<button type="button" class="comment-btn btn btn-light">게시</button>
+							<button type="button" class="comment-btn btn btn-light" data-post-id="${post.id}">게시</button>
 						</div>
 					</div> <%--// 댓글 목록 끝 --%>
 				</div> <%--// 카드1 끝 --%>
@@ -125,20 +125,23 @@
 		// 글쓰기
 		$("#writeBtn").on("click", function() {
 
+			let content = $("#writeTextArea").val();
+			
+			let file = $("#file").val();
+			if (file == "") {
+				alert("파일을 업로드 해주세요");
+				return;
+			}
+			
 			// 이미지 확장자 체크
-			let fileName = $("#file")[0].files[0].name; // winter-8425500_640.jpg
-			let ext = fileName.split(".").pop().toLowerCase();
-			alert(fileName);
-
-			if (ext != "jpg" && ext != "jpeg" && ext != "png" && ext != "gif") {
-				alert("이미지 파일만 업로드 할 수 있습니다.");
-				$("#file").val(""); // 파일 태그 파일 제거(보이지 않지만 업로드 될 수 있으므로 주의)
-				$("#fileName").text(""); // 보여지는 파일명 비우기
+			let ext = file.split(".").pop().toLowerCase();
+			if ($.inArray(ext, ["gif", "png", "jpg", "jpeg"]) == -1) {
+				alert("gif, png, jpg, jpeg 파일만 업로드 할 수 있습니다.");
+				$("#file").val("");
 				return;
 			}
 			
 			// form 태그 생성
-			let content = $("#writeTextArea").val();
 			let formData = new FormData();
 			formData.append("content", content);
 			formData.append("file", $("#file")[0].files[0]);
@@ -155,15 +158,42 @@
 					if(data.code = 200) {
 						alert("게시글이 저장되었습니다.");
 						location.reload();
+					} else if (data.code == 500) {
+						location.href = "/user/sign-in-view";
 					} else {
 						alert(data.error_message);
 					}
 				}
 				, error: function(request, status, error) {
-					alert("개시글을 저장하는데 실패했습니다.");
+					alert("게시글을 저장하는데 실패했습니다.");
 				}
 			})
 			
+		})
+		
+		// 댓글 쓰기
+		$(".comment-btn").on("click", function() {
+			let postId = $(this).data("post-id");
+			let content = $(this).siblings().eq(0).val();
+			
+			// validation
+			if(!content) {
+				alert("내용을 입력하세요.");
+				return;
+			}
+			
+			// ajax
+			$.ajax({
+				type: "POST"
+				, url: "/comment/create"
+				, data: {"postId": postId, "content": content}
+				, success: function(data) {
+					location.reload();
+				}
+				, error: function(request, status, error) {
+					alert("댓글을 저장하는데 실패했습니다.")
+				}
+			})
 		})
 		
 	})

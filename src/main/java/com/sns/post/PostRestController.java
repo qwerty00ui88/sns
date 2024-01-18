@@ -26,7 +26,6 @@ public class PostRestController {
 			@RequestParam(value = "content", required = false) String content,
 			@RequestParam("file") MultipartFile file,
 			HttpSession session) {
-		// userId
 		Integer userId = (Integer)session.getAttribute("userId");
 		String userLoginId = (String)session.getAttribute("userLoginId");
 		
@@ -37,7 +36,6 @@ public class PostRestController {
 			return result;
 		}
 		
-		// BO
 		postBO.addPost(userId, userLoginId, content, file);
 		
 		result.put("code", 200);
