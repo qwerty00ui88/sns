@@ -3,12 +3,28 @@ body {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	background-color: black;
 }
 
 header{
 	height: 100px;
+	margin-bottom: 2rem;
+	padding: 0 3.5rem;
+	background-color: white;
 }
 
 .contents{
-	min-height: 500px;
+	min-height: 375px;
+	display: flex;
+	justify-content: center;
+}
+
+.contents > div {
+	width: 70vw;
+	min-width: 375px;
+	max-width: 500px;
+}
+
+button {
+	white-space: nowrap;
 }

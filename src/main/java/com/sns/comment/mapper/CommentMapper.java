@@ -6,14 +6,16 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.sns.comment.domain.Comment;
+
 @Mapper
 public interface CommentMapper {
-
-	public List<Map<String, Object>> selectCommentList();
 	
 	public void insertComment(
 			@Param("postId") int postId, 
 			@Param("userId") int userId, 
 			@Param("content") String content);
+	
+	public List<Comment> selectCommentList();
 	
 }

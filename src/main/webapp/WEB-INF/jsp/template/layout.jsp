@@ -22,7 +22,7 @@
 </head>
 <body>
 	<div id="wrap">
-		<header class="bg-info">
+		<header>
 			<jsp:include page="../include/header.jsp" />
 		</header>
 		<section class="contents">

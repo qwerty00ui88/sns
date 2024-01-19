@@ -3,10 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="d-flex justify-content-center">
 	<div class="contents-box">
-
+	${cardList}
 		<%-- 글쓰기 영역(로그인 된 사람만 보이게) --%>
 		<c:if test="${not empty userId}">
-		<div class="write-box border rounded m-3">
+		<div class="write-box border rounded bg-light">
 			<textarea id="writeTextArea" placeholder="내용을 입력해주세요" class="w-100 border-0"></textarea>
 			
 			<div class="d-flex justify-content-between">
@@ -18,7 +18,7 @@
 					<%-- 업로드 된 임시 이미지 파일 이름 나타내는 곳 --%>
 					<div id="fileName" class="ml-2"></div>
 				</div>
-				<button id="writeBtn" class="btn btn-info">게시</button>
+				<button id="writeBtn" class="btn btn-dark">게시</button>
 			</div>
 		</div> <%--// 글쓰기 영역 끝 --%>
 		</c:if>
@@ -66,20 +66,25 @@
 					<%-- 댓글 목록 --%>
 					<div class="card-comment-list m-2">
 						<%-- 댓글 내용들 --%>
-						<div class="card-comment m-1">
-							<span class="font-weight-bold">댓글쓰니</span>
-							<span>댓글 내용1111</span>
-							
-							<%-- 댓글 삭제 버튼 --%>
-							<a href="#" class="comment-del-btn">
-								<img src="https://www.iconninja.com/files/603/22/506/x-icon.png" width="10" height="10">
-							</a>
-						</div>
-						
+						<%-- <c:forEach items="${commentList}" var="comment">
+							<c:if test="${comment.postId eq post.id}">
+								<div class="card-comment m-1 d-flex justify-content-between">
+									<div>
+										<span class="font-weight-bold">${comment.userId}</span>
+										<span>${comment.content}</span>
+									</div>
+									
+									댓글 삭제 버튼
+									<a href="#" class="comment-del-btn">
+										<img src="https://www.iconninja.com/files/77/683/724/delete-icon.png" width="12" height="12">
+									</a>
+								</div>
+							</c:if>
+						</c:forEach> --%>
 						<%-- 댓글 쓰기 --%>
 						<div class="comment-write d-flex border-top mt-2">
 							<input type="text" class="form-control border-0 mr-2 comment-input" placeholder="댓글 달기"/> 
-							<button type="button" class="comment-btn btn btn-light" data-post-id="${post.id}">게시</button>
+							<button type="button" class="comment-btn btn btn-light" data-user-id="${userId}" data-post-id="${post.id}">게시</button>
 						</div>
 					</div> <%--// 댓글 목록 끝 --%>
 				</div> <%--// 카드1 끝 --%>
@@ -173,8 +178,22 @@
 		
 		// 댓글 쓰기
 		$(".comment-btn").on("click", function() {
+			let userId = $(this).data("user-id");
+			if(!userId) {
+				// 비로그인이면 로그인 화면 이동
+				alert("로그인을 해주세요.");
+				location.href = "/user/sign-in-view";
+				return;
+			}
+			
 			let postId = $(this).data("post-id");
-			let content = $(this).siblings().eq(0).val();
+			
+			// 댓글 내용 가져오기
+			// 1) 이전 태그 값 가져오기
+			// let content = $(this).prev().val().trim();
+		
+			// 2) 형제 태그 중 input 값 가져오기
+			let content = $(this).siblings("input").val().trim();
 			
 			// validation
 			if(!content) {
