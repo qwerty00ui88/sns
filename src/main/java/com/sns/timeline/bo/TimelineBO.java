@@ -32,9 +32,10 @@ public class TimelineBO {
 		// post => cardView     => cardViewList에 넣기
 		for(PostEntity post : postList) {
 			CardView card = new CardView();
-			card.setPost(post);
 			UserEntity user = userBO.getUserEntityByUserId(post.getUserId());
+			card.setPost(post);
 			card.setUser(user);
+			cardViewList.add(card);
 		}
 		
 		return cardViewList;

@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="h-100 d-flex justify-content-between align-items-center">
 	<%-- logo --%>
 	<div>
-		<h1>SNS</h1>
+		<a href="/timeline/timeline-view"><h1>SNS</h1></a>
 	</div>
 	<%-- 로그인 정보 --%>
 	<div>

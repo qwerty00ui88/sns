@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="d-flex justify-content-center">
 	<div class="contents-box">
-	${cardList}
 		<%-- 글쓰기 영역(로그인 된 사람만 보이게) --%>
 		<c:if test="${not empty userId}">
 		<div class="write-box border rounded bg-light">
@@ -25,13 +24,13 @@
 		
 		
 		<%-- 타임라인 영역 --%>
-		<div class="timeline-box my-5">
-			<c:forEach items="${postList}" var="post">
+		<div class="timeline-box">
+			<c:forEach items="${cardList}" var="card">
 				<%-- 카드1 --%>
-				<div class="card border rounded mt-3">
+				<div class="card border rounded">
 					<%-- 글쓴이, 더보기(삭제) --%>
-					<div class="p-2 d-flex justify-content-between">
-						<span class="font-weight-bold">${post.userId}</span>
+					<div class="p-2 d-flex justify-content-between align-items-center">
+						<span class="font-weight-bold">${card.user.loginId}</span>
 						
 						<a href="#" class="more-btn">
 							<img src="https://www.iconninja.com/files/860/824/939/more-icon.png" width="30">
@@ -40,7 +39,7 @@
 					
 					<%-- 카드 이미지 --%>
 					<div class="card-img">
-						<img src="${post.imagePath}" class="w-100" alt="본문 이미지">
+						<img src="${card.post.imagePath}" class="w-100" alt="본문 이미지">
 					</div>
 					
 					<%-- 좋아요 --%>
@@ -48,14 +47,13 @@
 						<a href="#" class="like-btn">
 							<img src="https://www.iconninja.com/files/214/518/441/heart-icon.png" width="18" height="18" alt="empty heart">
 						</a>
-						
 						좋아요 13개
 					</div>
 					
 					<%-- 글 --%>
 					<div class="card-post m-3">
-						<span class="font-weight-bold">${post.userId}</span>
-						<span>${post.content}</span>
+						<span class="font-weight-bold">${card.user.loginId}</span>
+						<span>${card.post.content}</span>
 					</div>
 					
 					<%-- 댓글 제목 --%>
