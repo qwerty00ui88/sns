@@ -26,11 +26,17 @@ public class CommentRestController {
 			@RequestParam("content") String content, 
 			HttpSession session) {
 		
-		int userId = (int)session.getAttribute("userId");
+		Map<String, Object> result = new HashMap<>();
+		
+		Integer userId = (Integer) session.getAttribute("userId");
+		if (userId == null) {
+			result.put("code", 500);
+			result.put("error_message", "로그인을 해주세요.");
+			return result;
+		}
 		
 		commentBO.addComment(postId, userId, content);
 		
-		Map<String, Object> result = new HashMap<>();
 		result.put("code", 200);
 		result.put("result", "성공");
 		return result;
