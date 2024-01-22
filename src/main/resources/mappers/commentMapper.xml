@@ -48,6 +48,6 @@
 		DELETE FROM
 			`comment`
 		WHERE
-			`id` = #{commentId}
+			`id` = #{id}
 	</delete>
 </mapper>

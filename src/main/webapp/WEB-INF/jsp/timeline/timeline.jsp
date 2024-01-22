@@ -76,7 +76,7 @@
 								
 								<c:if test="${userId eq commentView.comment.userId}">
 									<%-- 댓글 삭제 버튼 --%>
-									<a href="#" class="comment-del-btn" data-user-id="${commentView.comment.userId}" data-comment-id="${commentView.comment.id}">
+									<a href="#" class="comment-del-btn" data-comment-id="${commentView.comment.id}">
 										<img src="https://www.iconninja.com/files/77/683/724/delete-icon.png" width="12" height="12">
 									</a>
 								</c:if>
@@ -232,12 +232,14 @@
 		})
 		
 		// 댓글 삭제
-		$(".comment-del-btn").on("click", function() {
+		$(".comment-del-btn").on("click", function(e) {
+			e.preventDefault();
+			
 			let commentId = $(this).data("comment-id");
 			
 			// ajax
 			$.ajax({
-				type : "GET"
+				type : "DELETE"
 				, url : "/comment/delete"
 				, data : {"commentId" : commentId}
 				, success: function(data) {
