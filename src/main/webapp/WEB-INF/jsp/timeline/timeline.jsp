@@ -29,7 +29,7 @@
 
 		<%-- 타임라인 영역 --%>
 		<div class="timeline-box">
-			<c:forEach items="${cardList}" var="card">
+			<c:forEach items="${cardViewList}" var="card">
 				<%-- 카드1 --%>
 				<div class="card border rounded">
 					<%-- 글쓴이, 더보기(삭제) --%>
@@ -67,28 +67,28 @@
 					<%-- 댓글 목록 --%>
 					<div class="card-comment-list m-2">
 						<%-- 댓글 내용들 --%>
-						<%-- <c:forEach items="${commentList}" var="comment">
-							<c:if test="${comment.postId eq post.id}">
-								<div class="card-comment m-1 d-flex justify-content-between">
-									<div>
-										<span class="font-weight-bold">${comment.userId}</span>
-										<span>${comment.content}</span>
-									</div>
-									
-									댓글 삭제 버튼
-									<a href="#" class="comment-del-btn">
+						<c:forEach items="${card.commentList}" var="commentView">
+							<div class="card-comment m-1 d-flex justify-content-between">
+								<div>
+									<span class="font-weight-bold">${commentView.user.loginId}</span>
+									<span>${commentView.comment.content}</span>
+								</div>
+								
+								<c:if test="${userId eq commentView.comment.userId}">
+									<%-- 댓글 삭제 버튼 --%>
+									<a href="#" class="comment-del-btn" data-user-id="${commentView.comment.userId}" data-comment-id="${commentView.comment.id}">
 										<img src="https://www.iconninja.com/files/77/683/724/delete-icon.png" width="12" height="12">
 									</a>
-								</div>
-							</c:if>
-						</c:forEach> --%>
+								</c:if>
+							</div>
+						</c:forEach>
 						<%-- 댓글 쓰기 --%>
 						<div class="comment-write d-flex border-top mt-2">
 							<input type="text"
 								class="form-control border-0 mr-2 comment-input"
 								placeholder="댓글 달기" />
 							<button type="button" class="comment-btn btn btn-light"
-								data-user-id="${userId}" data-post-id="${post.id}">게시</button>
+								data-user-id="${userId}" data-post-id="${card.post.id}">게시</button>
 						</div>
 					</div>
 					<%--// 댓글 목록 끝 --%>
@@ -227,6 +227,30 @@
 				},
 				error : function(request, status, error) {
 					alert("댓글을 저장하는데 실패했습니다.")
+				}
+			})
+		})
+		
+		// 댓글 삭제
+		$(".comment-del-btn").on("click", function() {
+			let commentId = $(this).data("comment-id");
+			
+			// ajax
+			$.ajax({
+				type : "GET"
+				, url : "/comment/delete"
+				, data : {"commentId" : commentId}
+				, success: function(data) {
+					if(data.code == 200) {
+						alert("댓글 삭제에 성공했습니다.");
+						location.reload();
+					} else if(data.code == 500) {
+						alert(data.error_message);
+						location.href = "/user/sign-in-view";
+					}
+				}
+				, error : function(request, status, error) {
+					alert("댓글을 삭제하는데 실패했습니다.");
 				}
 			})
 		})

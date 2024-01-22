@@ -17,28 +17,14 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class TimelineController {
 
-//	@Autowired
-//	private PostBO postBO;
-//	
-//	@Autowired 
-//	private CommentBO commentBO;
-	
 	@Autowired
 	private TimelineBO timelineBO;
 	
 	// http://localhost/timeline/timeline-view
 	@GetMapping("/timeline-view")
 	public String timelineView(Model model, HttpSession session) {
-//		// select
-//		List<PostEntity> postList= postBO.getPostEntityList();
-//		List<Comment> commentList = commentBO.getCommentList();
-//		
-//		// model
-//		model.addAttribute("postList", postList);
-//		model.addAttribute("commentList", commentList);
-		
-		List<CardView> cardList = timelineBO.generateCardViewList();
-		model.addAttribute("cardList", cardList);
+		List<CardView> cardViewList = timelineBO.generateCardViewList();
+		model.addAttribute("cardViewList", cardViewList);
 		model.addAttribute("viewName", "timeline/timeline");
 		
 		return "template/layout";
