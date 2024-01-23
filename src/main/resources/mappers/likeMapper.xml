@@ -8,4 +8,42 @@
 		FROM
 			`like`
 	</select>
+	<select id="selectLikeCountByPostIdUserId" parameterType="map" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			`like`			
+		WHERE
+			`postId` = #{postId}
+			AND `userId` = #{userId}
+	</select>
+	<insert id="insertLike" parameterType="map">
+		INSERT INTO `like`
+		(
+			`postId`
+			, `userId`
+			, `createdAt`		
+		)
+		VALUES
+		(
+			#{postId}
+			, #{userId}
+			, NOW()
+		)
+	</insert>
+	<delete id="deleteLike" parameterType="map">
+		DELETE FROM `like`
+		WHERE
+			`postId` = #{postId}
+		AND
+			`userId` = #{userId}
+	</delete>
+	<select id="selectLikeCountByPostId" parameterType="int" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM
+			`like`			
+		WHERE
+			`postId` = #{postId}
+	</select>
 </mapper>

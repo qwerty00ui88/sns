@@ -26,7 +26,6 @@
 			<%--// 글쓰기 영역 끝 --%>
 		</c:if>
 
-
 		<%-- 타임라인 영역 --%>
 		<div class="timeline-box">
 			<c:forEach items="${cardViewList}" var="card">
@@ -48,10 +47,19 @@
 
 					<%-- 좋아요 --%>
 					<div class="card-like m-3">
-						<a href="#" class="like-btn"> <img
+						<a href="#" class="like-btn" data-post-id="${card.post.id}">
+						<c:if test="${!card.filledLike}">
+						<img
 							src="https://www.iconninja.com/files/214/518/441/heart-icon.png"
 							width="18" height="18" alt="empty heart">
-						</a> 좋아요 13개
+						</c:if>
+						<c:if test="${card.filledLike}">
+						<img
+							src="https://www.iconninja.com/files/108/352/24/heart-icon.png"
+							width="18" height="18" alt="filled heart">
+						</a>
+						</c:if>
+						좋아요 ${card.likeCount}개
 					</div>
 
 					<%-- 글 --%>
@@ -257,5 +265,28 @@
 			})
 		})
 
+		// 좋아요 토글
+		$(".like-btn").on("click", function(e) {
+			e.preventDefault();
+			
+			let postId = $(this).data("post-id");
+			$.ajax({
+				// type: "GET", // 생략 가능
+				url: "/like/" + postId
+				, success: function(data) {
+					if(data.code == 200) {
+						location.reload(); // 새로고침 => timeline view 화면
+					} else if(data.code == 300) {
+						// 비로그인 시 로그인 페이지로 이동
+						alert(data.error_message);
+						location.href = "/user/sign-in-view";
+					}
+				}
+				, error: function(request, status, error) {
+					alert("서버 전송에 실패했습니다.")
+				}
+			})
+		})
+		
 	})
 </script>
