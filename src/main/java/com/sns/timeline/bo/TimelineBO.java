@@ -62,7 +62,7 @@ public class TimelineBO {
 			
 			// 로그인된 사람이 좋아요를 했는지 여부(비로그인 사용자 고려)
 			if(userId != null) {
-				boolean filledLike = likeBO.getLikeCountByPostIdUserId(post.getId(), userId) > 0;
+				boolean filledLike = likeBO.isFilledLike(post.getId(), userId);
 				cardView.setFilledLike(filledLike);
 			}
 			

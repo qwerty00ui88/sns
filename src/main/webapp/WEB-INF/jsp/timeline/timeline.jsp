@@ -57,8 +57,8 @@
 						<img
 							src="https://www.iconninja.com/files/108/352/24/heart-icon.png"
 							width="18" height="18" alt="filled heart">
-						</a>
 						</c:if>
+						</a>
 						좋아요 ${card.likeCount}개
 					</div>
 

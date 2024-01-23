@@ -14,10 +14,7 @@ public class LikeBO {
 	
 	// input: postId, userId   output: X
 	public void likeToggle(int postId, int userId) {
-		
-		int likeCount = likeMapper.selectLikeCountByPostIdUserId(postId, userId);
-		
-		if(likeCount > 0) {
+		if(likeMapper.selectLikeCountByPostIdUserId(postId, userId) > 0) {
 			// like 있으면 삭제
 			likeMapper.deleteLike(postId, userId);
 		} else {
@@ -30,8 +27,8 @@ public class LikeBO {
 		return likeMapper.selectLikeCountByPostId(postId);
 	}
 	
-	public int getLikeCountByPostIdUserId(int postId, int userId) {
-		return likeMapper.selectLikeCountByPostIdUserId(postId, userId);
+	public boolean isFilledLike(int postId, int userId) {
+		return likeMapper.selectLikeCountByPostIdUserId(postId, userId) > 0;
 	}
 	
 }
