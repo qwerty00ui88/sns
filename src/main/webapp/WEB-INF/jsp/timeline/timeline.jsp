@@ -47,18 +47,20 @@
 
 					<%-- 좋아요 --%>
 					<div class="card-like m-3">
-						<a href="#" class="like-btn" data-post-id="${card.post.id}">
-						<c:if test="${!card.filledLike}">
-						<img
-							src="https://www.iconninja.com/files/214/518/441/heart-icon.png"
-							width="18" height="18" alt="empty heart">
+						<c:if test="${card.filledLike eq false}">
+							<a href="#" class="like-btn" data-post-id="${card.post.id}">
+								<img
+								src="https://www.iconninja.com/files/214/518/441/heart-icon.png"
+								width="18" height="18" alt="empty heart">
+							</a>
 						</c:if>
-						<c:if test="${card.filledLike}">
-						<img
-							src="https://www.iconninja.com/files/108/352/24/heart-icon.png"
-							width="18" height="18" alt="filled heart">
+						<c:if test="${card.filledLike eq true}">
+							<a href="#" class="like-btn" data-post-id="${card.post.id}">
+								<img
+								src="https://www.iconninja.com/files/527/809/128/heart-icon.png"
+								width="18" height="18" alt="filled heart">
+							</a>
 						</c:if>
-						</a>
 						좋아요 ${card.likeCount}개
 					</div>
 
@@ -81,11 +83,13 @@
 									<span class="font-weight-bold">${commentView.user.loginId}</span>
 									<span>${commentView.comment.content}</span>
 								</div>
-								
+
 								<c:if test="${userId eq commentView.comment.userId}">
 									<%-- 댓글 삭제 버튼 --%>
-									<a href="#" class="comment-del-btn" data-comment-id="${commentView.comment.id}">
-										<img src="https://www.iconninja.com/files/77/683/724/delete-icon.png" width="12" height="12">
+									<a href="#" class="comment-del-btn"
+										data-comment-id="${commentView.comment.id}"> <img
+										src="https://www.iconninja.com/files/77/683/724/delete-icon.png"
+										width="12" height="12">
 									</a>
 								</c:if>
 							</div>
@@ -238,28 +242,30 @@
 				}
 			})
 		})
-		
+
 		// 댓글 삭제
 		$(".comment-del-btn").on("click", function(e) {
 			e.preventDefault();
-			
+
 			let commentId = $(this).data("comment-id");
-			
+
 			// ajax
 			$.ajax({
-				type : "DELETE"
-				, url : "/comment/delete"
-				, data : {"commentId" : commentId}
-				, success: function(data) {
-					if(data.code == 200) {
+				type : "DELETE",
+				url : "/comment/delete",
+				data : {
+					"commentId" : commentId
+				},
+				success : function(data) {
+					if (data.code == 200) {
 						alert("댓글 삭제에 성공했습니다.");
 						location.reload();
-					} else if(data.code == 500) {
+					} else if (data.code == 500) {
 						alert(data.error_message);
 						location.href = "/user/sign-in-view";
 					}
-				}
-				, error : function(request, status, error) {
+				},
+				error : function(request, status, error) {
 					alert("댓글을 삭제하는데 실패했습니다.");
 				}
 			})
@@ -268,25 +274,25 @@
 		// 좋아요 토글
 		$(".like-btn").on("click", function(e) {
 			e.preventDefault();
-			
+
 			let postId = $(this).data("post-id");
 			$.ajax({
 				// type: "GET", // 생략 가능
-				url: "/like/" + postId
-				, success: function(data) {
-					if(data.code == 200) {
+				url : "/like/" + postId,
+				success : function(data) {
+					if (data.code == 200) {
 						location.reload(); // 새로고침 => timeline view 화면
-					} else if(data.code == 300) {
+					} else if (data.code == 300) {
 						// 비로그인 시 로그인 페이지로 이동
 						alert(data.error_message);
 						location.href = "/user/sign-in-view";
 					}
-				}
-				, error: function(request, status, error) {
+				},
+				error : function(request, status, error) {
 					alert("서버 전송에 실패했습니다.")
 				}
 			})
 		})
-		
+
 	})
 </script>
