@@ -59,4 +59,8 @@ public class CommentBO {
 		commentMapper.deleteCommentById(id);
 	}
 	
+	public void deleteCommentByPostId(int postId) {
+		commentMapper.deleteCommentByPostId(postId);
+	}
+	
 }

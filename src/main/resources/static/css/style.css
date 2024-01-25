@@ -6,9 +6,13 @@ body {
 	box-sizing: border-box;
 }
 
- a, a:hover, a:active, a:visited {
+a, a:hover, a:active, a:visited {
 	text-decoration: none;
 	color: inherit;
+}
+
+button {
+	white-space: nowrap;
 }
 
 header, .contents {
@@ -46,10 +50,6 @@ header {
 
 .card {
 	margin-bottom: 1rem;
-}
-
-button {
-	white-space: nowrap;
 }
 
 @media screen and (max-width: 768px) {
