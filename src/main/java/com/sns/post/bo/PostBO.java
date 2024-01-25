@@ -55,21 +55,19 @@ public class PostBO {
 				.build());
 	}
 	
-	public void deletePostByPostId(int postId) {
+	public void deletePostByPostIdUserId(int postId, int userId) {
 		// 기존 글 가져오기
 		PostEntity post = postRepository.findById(postId).orElse(null);
 		if(post == null) {
-			log.info("[글 삭제] post is null. postId:{}", postId);
+			log.info("[글 삭제] post is null. postId:{}, userId{}", postId, userId);
 			return;
 		}
 		
 		// 글 삭제
-		postRepository.deleteById(postId);
+		postRepository.delete(post);
 		
-		// 이미지 있으면 삭제
-		if(post.getImagePath() != null) {
-			fileManagerService.deleteFile(post.getImagePath());
-		}
+		// 이미지 삭제
+		fileManagerService.deleteFile(post.getImagePath());
 		
 		// 댓글들 삭제
 		commentBO.deleteCommentByPostId(postId);
@@ -77,5 +75,4 @@ public class PostBO {
 		// 좋아요들 삭제
 		likeBO.deleteLikeByPostId(postId);
 	}
-
 }

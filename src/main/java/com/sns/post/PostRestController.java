@@ -58,7 +58,7 @@ public class PostRestController {
 			return result;
 		}
 		
-		postBO.deletePostByPostId(postId);
+		postBO.deletePostByPostIdUserId(postId, userId);
 		
 		result.put("code", 200);
 		result.put("result", "성공");

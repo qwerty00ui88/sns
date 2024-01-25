@@ -28,7 +28,7 @@ public interface LikeMapper {
 			@Param("postId") int postId, 
 			@Param("userId") int userId);
 	
-	public void deleteLike(
+	public void deleteLikeByPostIdOrUserId(
 			@Param("postId") int postId, 
 			@Param("userId") Integer userId);	
 }

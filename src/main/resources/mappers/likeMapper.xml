@@ -51,13 +51,12 @@
 			, NOW()
 		)
 	</insert>
-	<delete id="deleteLike" parameterType="map">
+	<delete id="deleteLikeByPostIdOrUserId" parameterType="map">
 		DELETE FROM `like`
 		WHERE
 			`postId` = #{postId}
-		<if test="userId != null">
-		AND
-			`userId` = #{userId}
-		</if>
+			<if test="userId != null">
+			AND `userId` = #{userId}
+			</if>
 	</delete>
 </mapper>
