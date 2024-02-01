@@ -37,7 +37,7 @@ public class PostEntity {
 	private String imagePath;
 	
 	@UpdateTimestamp
-	@Column(name = "createdAt")
+	@Column(name = "createdAt", updatable = false)
 	private ZonedDateTime createdAt;
 	
 	@UpdateTimestamp
