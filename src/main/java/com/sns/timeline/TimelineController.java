@@ -20,6 +20,12 @@ public class TimelineController {
 	@Autowired
 	private TimelineBO timelineBO;
 	
+	/**
+	 * 타임라인 화면
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	// http://localhost/timeline/timeline-view
 	@GetMapping("/timeline-view")
 	public String timelineView(Model model, HttpSession session) {

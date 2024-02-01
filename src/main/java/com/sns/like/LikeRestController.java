@@ -18,6 +18,12 @@ public class LikeRestController {
 	@Autowired
 	private LikeBO likeBO;
 	
+	/**
+	 * 좋아요 추가/삭제 API
+	 * @param postId
+	 * @param session
+	 * @return
+	 */
 	// GET: /like?postId=13   @RequestParam("postId")
 	// GET: /like/13          @PathVariable
 	@RequestMapping("/like/{postId}")
